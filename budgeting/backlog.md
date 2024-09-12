@@ -2,6 +2,7 @@
 Project management document
 
 ## Basic structure of the data
+_basic models implemented_
 
 ### Cashflow registering
 * The basic unit of data is a transaction - financial event described with amount, date, category, group and description
