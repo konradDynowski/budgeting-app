@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Group Details</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'budgeting_app:all_groups' %}">Groups</a>
+            </li>
+            <li>
+                <a href="{% url 'budgeting_app:group_create' %}">Create group</a>
+            </li>
+        </ul>
+    </nav>
+    <div>
+        <h3>Group id {{ budget_group.id }} </h3>
+        <p>Group code: {{budget_group.group_code}}</p>
+        <p>Group name: {{budget_group.group_name}}</p>
+        <p>Group description: {{budget_group.group_description}}</p>
+    </div>
+    <div>
+        <h3>Edit group?</h3>
+        <form action="{% url 'budgeting_app:edit_group' budget_group.id %}" method="post">
+            {% csrf_token %}
+            <fieldset>
+
+                <legend>
+                    <h3>Edditing group {{ budget_group.id }} </h3>
+                </legend>
+                <input type="text" name="group_code" id="group_code" maxlength="10">
+                <label for="group_code">Group code ({{ budget_group.group_code }})</label><br>
+                <input type="text" name="group_name" id="group_name" maxlength="32">
+                <label for="group_name">Group name ({{ budget_group.group_name }})</label><br>
+                <input type="text" name="group_description" id="group_description" maxlength="100">
+                <label for="group_description">Group description ({{ budget_group.group_description }})</label>
+            </fieldset>
+            <input type="submit" value="edit_group">
+        </form>
+    </div>
+    <div>
+        <h3>Delete group?</h3>
+        <form action="{% url 'budgeting_app:delete_group' budget_group.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="delete_group">
+        </form>
+    </div>
+</body>

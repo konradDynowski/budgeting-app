@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>All Groups</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'budgeting_app:all_groups' %}">Groups</a>
+            </li>
+            <li>
+                <a href="{% url 'budgeting_app:group_create' %}">Create group</a>
+            </li>
+        </ul>
+
+    </nav>
+    {% if all_groups %}
+    <div name="ALL_GROUPS">
+        {% for group in all_groups %}
+        <div name="group{{ group.id }}">
+            <h5>Group id {{ group.id }} </h3>
+                <p>Group {{group.group_code}} -- Group name: {{group.group_name}}</p>
+                <a href="{% url 'budgeting_app:group_detail' group.id %}">View Group details</a>
+                <!-- <p>Group description: {{group.group_description}}</p> -->
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div>
+        <p>No groups yet, please add some</p>
+        <a href="{%url 'budgeting_app:group_create' %}">Create group</a>
+    </div>
+    {% endif %}
+</body>
