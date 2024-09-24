@@ -17,9 +17,11 @@ _basic models implemented_
 ### Main - top priority
 
 #### App opening and navigation
+_all groups and create group added_
 As a user I want to be able to open main page and navigate to relevant pages using visible links.
 
 #### Groups management
+_implemented_
 As a user I want to be able to 
 * view existing groups
 * add new groups
