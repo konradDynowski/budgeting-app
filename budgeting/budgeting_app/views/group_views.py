@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from .models import Budget_Group
+from ..models import Budget_Group
 from django.urls import reverse
 from django.shortcuts import HttpResponseRedirect
 

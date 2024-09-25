@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Category Creation</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="{% url 'budgeting_app:all_groups' %}">Groups</a>
+            </li>
+            <li>
+                <a href="{% url 'budgeting_app:group_create' %}">Create group</a>
+            </li>
+            <li>
+                <a href="{% url 'budgeting_app:category_create' %}">Create Category</a>
+            </li>
+            <li>
+                <a href="{% url 'budgeting_app:all_categories' %}">Categories</a>
+            </li>
+        </ul>
+    </nav>
+    <div>
+        <h3>Create category</h3>
+        <form action="{% url 'budgeting_app:create_category' %}" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend>
+                    <h3>Create a category using this form!</h3>
+                </legend>
+                <input type="text" name="category_code" id="category_code" maxlength="10">
+                <label for="category_code">Category code ({{ budget_category.category_code }})</label><br>
+                <select name="group_id" id="group_id">
+                    <option value="">Select group</option>
+                    {% for group in groups %}
+                    <option value="{{ group.id }}">{{ group.group_code }} -- {{ group.group_name }}</option>
+                    {% endfor %}
+                </select>
+                <label for="group_id">Group id ({{ budget_category.group_id }})</label><br>
+                <input type="text" name="category_name" id="category_name" maxlength="32">
+                <label for="category_name">Category name ({{ budget_category.category_name }})</label><br>
+                <input type="text" name="category_description" id="category_description" maxlength="100">
+                <label for="category_description">Category description ({{ budget_category.category_description
+                    }})</label>
+            </fieldset>
+            <input type="submit" value="create_category">
+        </form>
+    </div>
+</body>

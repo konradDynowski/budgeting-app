@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>All Groups</title>
+    <title>All Categories</title>
 </head>
 
 <body>
@@ -22,21 +22,20 @@
             </li>
         </ul>
     </nav>
-    {% if all_groups %}
-    <div name="ALL_GROUPS">
-        {% for group in all_groups %}
-        <div name="group{{ group.id }}">
-            <h5>Group id {{ group.id }} </h3>
-                <p>Group {{group.group_code}} -- Group name: {{group.group_name}}</p>
-                <a href="{% url 'budgeting_app:group_detail' group.id %}">View Group details</a>
-                <!-- <p>Group description: {{group.group_description}}</p> -->
+    {% if all_categories %}
+    <div name="ALL_CATEGORIES">
+        {% for category in all_categories %}
+        <div name="category{{ category.id }}">
+            <h5>Category id {{ category.id }} </h3>
+                <p>Category {{category.category_code}} -- Category name: {{category.category_name}} -- Group: {{category.group_id}}</p>
+                <a href="{% url 'budgeting_app:category_detail' category.id %}">View Category details</a>
         </div>
         {% endfor %}
     </div>
     {% else %}
     <div>
-        <p>No groups yet, please add some</p>
-        <a href="{%url 'budgeting_app:group_create' %}">Create group</a>
+        <p>No categories yet, please add some</p>
+        <a href="{%url 'budgeting_app:category_create' %}">Create category</a>
     </div>
     {% endif %}
 </body>
