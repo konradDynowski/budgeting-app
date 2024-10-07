@@ -8,11 +8,11 @@ from django.shortcuts import HttpResponseRedirect
 # Create your views here.
 class Group_Detail_View(generic.DetailView):
     model = Budget_Group
-    template_name = "budgeting_app/group_details.html"
+    template_name = "budgeting_app/group_categories/group_details.html"
 
 
 class All_Groups_View(generic.ListView):
-    template_name = "budgeting_app/all_groups.html"
+    template_name = "budgeting_app/group_categories/all_groups.html"
     context_object_name = "all_groups"
 
     def get_queryset(self):
@@ -20,7 +20,7 @@ class All_Groups_View(generic.ListView):
 
 
 class Group_Create_View(generic.base.TemplateView):
-    template_name = "budgeting_app/create_group.html"
+    template_name = "budgeting_app/group_categories/create_group.html"
 
 
 def create_group(request):
