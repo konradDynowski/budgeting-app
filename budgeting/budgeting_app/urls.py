@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import group_views
 from .views import category_views
+from .views import budget_txn_views
 
 app_name = "budgeting_app"
 urlpatterns = [
@@ -42,5 +43,9 @@ urlpatterns = [
         "delete_category/<int:pk>/",
         category_views.delete_category,
         name="delete_category",
+    ),
+    # Transactions
+    path(
+        "add-transactions/", budget_txn_views.add_transactions, name="add_transactions"
     ),
 ]

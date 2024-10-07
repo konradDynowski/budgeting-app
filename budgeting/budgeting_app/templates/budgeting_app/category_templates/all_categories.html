@@ -9,6 +9,9 @@
     <nav>
         <ul>
             <li>
+                <a href="{% url 'budgeting_app:add_transactions' %}">Add Transactions</a>
+            </li>
+            <li>
                 <a href="{% url 'budgeting_app:all_groups' %}">Groups</a>
             </li>
             <li>
@@ -27,7 +30,8 @@
         {% for category in all_categories %}
         <div name="category{{ category.id }}">
             <h5>Category id {{ category.id }} </h3>
-                <p>Category {{category.category_code}} -- Category name: {{category.category_name}} -- Group: {{category.group_id}}</p>
+                <p>Category {{category.category_code}} -- Category name: {{category.category_name}} -- Group:
+                    {{category.group_id}}</p>
                 <a href="{% url 'budgeting_app:category_detail' category.id %}">View Category details</a>
         </div>
         {% endfor %}
