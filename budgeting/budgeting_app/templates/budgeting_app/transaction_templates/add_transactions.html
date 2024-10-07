@@ -6,25 +6,6 @@
     <title>Add Transactions</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function addTransactionRow() {
-            const formCount = document.querySelectorAll(".transaction-form").length;
-            const emptyRow = document.querySelector(".transaction-form").cloneNode(true);
-
-            emptyRow.querySelectorAll("input").forEach(
-                input => {
-                    input.value = "";
-                    const name = input.getAttribute("name");
-                    input.setAttribute("name", name.replace("0", formCount));
-                    input.setAttribute("id", name.replace("0", formCount));
-                }
-            );
-
-            document.getElementById("form-container").appendChild(emptyRow);
-
-            document.getElementById("id_form-TOTAL_FORMS").value = formCount + 1;
-        }
-    </script>
 </head>
 
 <body>
