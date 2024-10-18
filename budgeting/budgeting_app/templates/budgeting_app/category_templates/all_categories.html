@@ -1,41 +1,17 @@
-<!DOCTYPE html>
+<!-- home.html -->
+{% extends "budgeting_app/base/base.html" %}
 
-<head>
-    <meta charset="utf-8"/>
-    <title>All Categories</title>
-</head>
+{% block title %}Home - My Django App{% endblock %}
 
-<body>
-<nav>
-    <ul>
-        <li>
-            <a href="{% url 'budgeting_app:add_transactions' %}">Add Transactions</a>
-        </li>
-        <li>
-            <a href="{% url 'budgeting_app:all_groups' %}">Groups</a>
-        </li>
-        <li>
-            <a href="{% url 'budgeting_app:group_create' %}">Create group</a>
-        </li>
-        <li>
-            <a href="{% url 'budgeting_app:category_create' %}">Create Category</a>
-        </li>
-        <li>
-            <a href="{% url 'budgeting_app:all_categories' %}">Categories</a>
-        </li>
-        <li>
-            <a href="{% url 'budgeting_app:all_transactions' %}">All transactions</a>
-        </li>
-    </ul>
-</nav>
+{% block content %}
 {% if all_categories %}
 <div name="ALL_CATEGORIES">
     {% for category in all_categories %}
     <div name="category{{ category.id }}">
-        <h5>Category id {{ category.id }} </h3>
-            <p>Category {{category.category_code}} -- Category name: {{category.category_name}} -- Group:
-                {{category.group_id}}</p>
-            <a href="{% url 'budgeting_app:category_detail' category.id %}">View Category details</a>
+        <h5>Category id {{ category.id }} </h5>
+        <p>Category {{category.category_code}} -- Category name: {{category.category_name}} -- Group:
+            {{category.group_id}}</p>
+        <a href="{% url 'budgeting_app:category_detail' category.id %}">View Category details</a>
     </div>
     {% endfor %}
 </div>
@@ -45,4 +21,4 @@
     <a href="{%url 'budgeting_app:category_create' %}">Create category</a>
 </div>
 {% endif %}
-</body>
+{% endblock %}

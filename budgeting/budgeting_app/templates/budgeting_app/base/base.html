@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Django App{% endblock %}</title>
+        {% load static %} <!-- Load the static template tag library -->
+    <link rel="stylesheet" href="{% static 'budgeting_app/style.css' %}">
+</head>
+<body>
+<nav class="sidenav">
+    <a href="{% url 'budgeting_app:add_transactions' %}">Add Transactions</a>
+    <a href="{% url 'budgeting_app:all_groups' %}">Groups</a>
+    <a href="{% url 'budgeting_app:group_create' %}">Create group</a>
+    <a href="{% url 'budgeting_app:category_create' %}">Create Category</a>
+    <a href="{% url 'budgeting_app:all_categories' %}">Categories</a>
+    <a href="{% url 'budgeting_app:all_transactions' %}">All transactions</a>
+</nav>
+
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

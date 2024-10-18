@@ -1,36 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "budgeting_app/base/base.html" %}
 
-<head>
-    <meta charset="utf-8"/>
-    <title>Add Transactions</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
+{% block title %}Home - My Django App{% endblock %}
 
-<body>
-<nav>
-    <ul>
-        <li>
-            <a href="{% url 'budgeting_app:add_transactions' %}">Add Transactions</a>
-        </li>
-        <li>
-            <a href="{% url 'budgeting_app:all_groups' %}">Groups</a>
-        </li>
-        <li>
-            <a href="{% url 'budgeting_app:group_create' %}">Create group</a>
-        </li>
-        <li>
-            <a href="{% url 'budgeting_app:category_create' %}">Create Category</a>
-        </li>
-        <li>
-            <a href="{% url 'budgeting_app:all_categories' %}">Categories</a>
-        </li>
-        <li>
-            <a href="{% url 'budgeting_app:all_transactions' %}">All transactions</a>
-        </li>
-    </ul>
-</nav>
+{% block content %}
 <h1>Add Transactions</h1>
 <form method="POST">
     {% csrf_token %}
@@ -53,6 +25,9 @@
             <td>{{ form.transaction_date }}</td>
             <td>{{ form.transaction_amount }}</td>
             <td>{{ form.transaction_description }}</td>
+            <td>
+                <button class="remove-row" id="meaninglessid" name="meaninglessname">removeme</button>
+            </td>
         </tr>
         {% endfor %}
         </tbody>
@@ -64,14 +39,13 @@
             let formIdx = {{ formset.total_form_count }}
 
         $("#add-row").click(function () {
-            let newForm = $("#transactionTable tbody tr:last").clone(true);
+            let newForm = $("#transactionTable tbody tr:first").clone(true);
             formIdx++;
             newForm.find(":input").each(function () {
                 let newName = $(this).attr("name").replace(/-\d+-/, `-${formIdx}-`);
                 let newId = $(this).attr("id").replace(/-\d+-/, `-${formIdx}-`);
                 $(this).attr("id", newId);
                 $(this).attr("name", newName);
-                $(this).val("");
                 $("#id_form-TOTAL_FORMS").val(formIdx + 1);
             });
             $("#transactionTable tbody").append(newForm);
@@ -83,6 +57,4 @@
 
 </script>
 
-</body>
-
-</html>
+{% endblock %}

@@ -5,6 +5,7 @@ from .views import budget_txn_views
 
 app_name = "budgeting_app"
 urlpatterns = [
+    path("", group_views.All_Groups_View.as_view(), name="index"),
     # Groups
     path(
         "group_details/<int:pk>/",
