@@ -1,46 +1,50 @@
 <!DOCTYPE html>
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Group Creation</title>
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <li>
-                <a href="{% url 'budgeting_app:all_groups' %}">Groups</a>
-            </li>
-            <li>
-                <a href="{% url 'budgeting_app:group_create' %}">Create group</a>
-            </li>
-            <li>
-                <a href="{% url 'budgeting_app:category_create' %}">Create Category</a>
-            </li>
-            <li>
-                <a href="{% url 'budgeting_app:all_categories' %}">Categories</a>
-            </li>
-            <li>
-                <a href="{% url 'budgeting_app:add_transactions' %}">Add Transactions</a>
-            </li>
-        </ul>
-    </nav>
-    <div>
-        <h3>Create group</h3>
-        <form action="{% url 'budgeting_app:create_group' %}" method="post">
-            {% csrf_token %}
-            <fieldset>
-                <legend>
-                    <h3>Create a group using this form!</h3>
-                </legend>
-                <input type="text" name="group_code" id="group_code" maxlength="10">
-                <label for="group_code">Group code</label><br>
-                <input type="text" name="group_name" id="group_name" maxlength="32">
-                <label for="group_name">Group name</label><br>
-                <input type="text" name="group_description" id="group_description" maxlength="100">
-                <label for="group_group_description">Group description</label><br>
-            </fieldset>
-            <input type="submit" value="create_group">
-        </form>
-    </div>
+<nav>
+    <ul>
+        <li>
+            <a href="{% url 'budgeting_app:all_groups' %}">Groups</a>
+        </li>
+        <li>
+            <a href="{% url 'budgeting_app:group_create' %}">Create group</a>
+        </li>
+        <li>
+            <a href="{% url 'budgeting_app:category_create' %}">Create Category</a>
+        </li>
+        <li>
+            <a href="{% url 'budgeting_app:all_categories' %}">Categories</a>
+        </li>
+        <li>
+            <a href="{% url 'budgeting_app:add_transactions' %}">Add Transactions</a>
+        </li>
+        <li>
+            <a href="{% url 'budgeting_app:all_transactions' %}">All transactions</a>
+        </li>
+
+    </ul>
+</nav>
+<div>
+    <h3>Create group</h3>
+    <form action="{% url 'budgeting_app:create_group' %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>
+                <h3>Create a group using this form!</h3>
+            </legend>
+            <input type="text" name="group_code" id="group_code" maxlength="10">
+            <label for="group_code">Group code</label><br>
+            <input type="text" name="group_name" id="group_name" maxlength="32">
+            <label for="group_name">Group name</label><br>
+            <input type="text" name="group_description" id="group_description" maxlength="100">
+            <label for="group_group_description">Group description</label><br>
+        </fieldset>
+        <input type="submit" value="create_group">
+    </form>
+</div>
 </body>

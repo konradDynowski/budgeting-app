@@ -11,3 +11,6 @@ class BudgetTransactionForm(forms.ModelForm):
             "transaction_amount",
             "transaction_description",
         ]
+        widgets = {
+            'transaction_date': forms.DateInput(attrs={'type': 'date'}),  # HTML5 date input
+        }

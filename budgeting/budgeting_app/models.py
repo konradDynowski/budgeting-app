@@ -15,6 +15,9 @@ class Budget_Category(models.Model):
     category_description = models.CharField(max_length=100)
     active_flag = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.category_code + "." + self.category_name
+
 
 class Budget_Transaction(models.Model):
     category_id = models.ForeignKey(Budget_Category, on_delete=models.CASCADE)

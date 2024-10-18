@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+<html>
 
 <head>
     <meta charset="utf-8"/>
-    <title>All Categories</title>
+    <title>All Transactions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -28,21 +30,17 @@
         </li>
     </ul>
 </nav>
-{% if all_categories %}
-<div name="ALL_CATEGORIES">
-    {% for category in all_categories %}
-    <div name="category{{ category.id }}">
-        <h5>Category id {{ category.id }} </h3>
-            <p>Category {{category.category_code}} -- Category name: {{category.category_name}} -- Group:
-                {{category.group_id}}</p>
-            <a href="{% url 'budgeting_app:category_detail' category.id %}">View Category details</a>
-    </div>
+<h1>All Transactions</h1>
+<table name="all_txns">
+    {% for txn in all_txns %}
+    <tr name="txn_{{ txn.id }}">
+        <td>{{ txn.category }}</td>
+        <td>{{ txn.transaction_date }}</td>
+        <td>{{ txn.transaction_amount }}</td>
+        <td>{{ txn.transaction_description }}</td>
+    </tr>
     {% endfor %}
-</div>
-{% else %}
-<div>
-    <p>No categories yet, please add some</p>
-    <a href="{%url 'budgeting_app:category_create' %}">Create category</a>
-</div>
-{% endif %}
+</table>
 </body>
+
+</html>

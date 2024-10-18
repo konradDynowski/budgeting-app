@@ -1,4 +1,8 @@
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
+from django.views import generic
+
 from ..forms import BudgetTransactionForm
 from django.forms import modelformset_factory
 from ..models import Budget_Transaction
@@ -11,12 +15,25 @@ def add_transactions(request):
 
     if request.method == "POST":
         formset = BudgetTransactionFormSet(request.POST)
+        print(formset.errors)
         if formset.is_valid():
+            print("formset is valid")
             formset.save()
-            return redirect("success peaches")
-
+            return HttpResponseRedirect(
+                reverse("budgeting_app:all_transactions")
+            )
     else:
         formset = BudgetTransactionFormSet(queryset=Budget_Transaction.objects.none())
     return render(
-        request, "transaction_templates/add_transactions.html", {"formset": formset}
+        request,
+        "budgeting_app/transaction_templates/add_transactions.html",
+        {"formset": formset},
     )
+
+
+class AllTransactionsView(generic.ListView):
+    template_name = "budgeting_app/transaction_templates/all_transactions.html"
+    context_object_name = "all_txns"
+
+    def get_queryset(self):
+        return Budget_Transaction.objects.all()

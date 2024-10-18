@@ -48,4 +48,5 @@ urlpatterns = [
     path(
         "add-transactions/", budget_txn_views.add_transactions, name="add_transactions"
     ),
+    path("all_transactions/", budget_txn_views.AllTransactionsView.as_view(), name="all_transactions")
 ]
