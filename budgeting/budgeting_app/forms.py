@@ -1,5 +1,5 @@
 from django import forms
-from .models import Budget_Transaction
+from .models import Budget_Group, Budget_Transaction
 
 
 class BudgetTransactionForm(forms.ModelForm):
@@ -12,9 +12,27 @@ class BudgetTransactionForm(forms.ModelForm):
             "transaction_description",
         ]
         widgets = {
-            'transaction_date': forms.DateInput(attrs={'type': 'date'}),  # HTML5 date input
+            "transaction_date": forms.DateInput(
+                attrs={"type": "date"}
+            ),  # HTML5 date input
         }
 
+
 class FilterAllTransactions(forms.Form):
-    date_from = forms.DateField(required=True, label="Od", widget=forms.DateInput(attrs={"type":"date"}))
-    date_to = forms.DateField(required=True, label="Do", widget=forms.DateInput(attrs={"type":"date"}))
+    date_from = forms.DateField(
+        required=True, label="Od", widget=forms.DateInput(attrs={"type": "date"})
+    )
+    date_to = forms.DateField(
+        required=True, label="Do", widget=forms.DateInput(attrs={"type": "date"})
+    )
+
+
+class BudgetGroupForm(forms.ModelForm):
+    class Meta:
+        model = Budget_Group
+        fields = [
+            "id",
+            "group_code",
+            "group_name",
+            "group_description",
+        ]

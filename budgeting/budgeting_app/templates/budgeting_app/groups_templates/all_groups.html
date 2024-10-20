@@ -1,23 +1,75 @@
 {% extends "budgeting_app/base/base.html" %}
 
-{% block title %}All groups{% endblock %}
+{% block title %}Grupy{% endblock %}
 
 {% block content %}
-{% if all_groups %}
-<div name="ALL_GROUPS">
+<!-- All interesting stuff goes here from other group screens -->
+<h1>Wszystkie grupy</h1>
+<h2>Grupy</h2>
+<table class="groups-table" name="all-groups">
+    <tr name="header">
+        <th>ID grupy</th>
+        <th>Kod grupy</th>
+        <th>Nazwa grupy</th>
+        <th>Opis grupy</th>
+    </tr>
     {% for group in all_groups %}
-    <div name="group{{ group.id }}">
-        <h5>Group id {{ group.id }} </h5>
-            <p>Group {{group.group_code}} -- Group name: {{group.group_name}}</p>
-            <a href="{% url 'budgeting_app:group_detail' group.id %}">View Group details</a>
-            <!-- <p>Group description: {{group.group_description}}</p> -->
-    </div>
+    <tr name="group_{{ group.id }}">
+        <td>{{ group.id }}</td>
+        <td>{{ group.group_code }}</td>
+        <td>{{ group.group_name }}</td>
+        <td>{{ group.group_description }}</td>
+    </tr>
     {% endfor %}
-</div>
-{% else %}
-<div>
-    <p>No groups yet, please add some</p>
-    <a href="{%url 'budgeting_app:group_create' %}">Create group</a>
-</div>
-{% endif %}
+</table>
+
+<h2>Dodaj nowe grupy</h2>
+<form method="POST">
+    {% csrf_token %}
+    <table id="groups-table">
+        <thead>
+            <tr>
+                <th>Kod grupy</th>
+                <th>Nazwa grupy</th>
+                <th>Opis grupy</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ formset.management_form }}
+            {% for form in formset %}
+            <tr class="group-form">
+                <td>{{ form.group_code}}</td>
+                <td>{{ form.group_name}}</td>
+                <td>{{ form.group_description}}</td>
+                <td>
+                    <button class="remove-row" type="button">Usuń wiersz</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" id="add-row">Dodaj grupę</button>
+    <button type="submit">Zapisz</button>
+</form>
+<script>
+    let formIdx = {{ formset.total_form_count }};
+
+    $("#add-row").click(function () {
+        let newForm = $("#transactionTable tbody tr:first").clone(true);
+        formIdx++;
+        newForm.find(":input").each(function () {
+            let newName = $(this).attr("name").replace(/-\d+-/, `-${formIdx}-`);
+            let newId = $(this).attr("id").replace(/-\d+-/, `-${formIdx}-`);
+            $(this).attr("id", newId);
+            $(this).attr("name", newName);
+            $("#id_form-TOTAL_FORMS").val(formIdx + 1);
+        });
+        $("#transactionTable tbody").append(newForm);
+    });
+
+    $("#transactionTable").on("click", ".remove-row", function () {
+        $(this).closest("tr").remove();
+    });
+</script>
+
 {% endblock %}

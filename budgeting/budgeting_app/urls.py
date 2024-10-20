@@ -5,21 +5,21 @@ from .views import budget_txn_views
 
 app_name = "budgeting_app"
 urlpatterns = [
-    path("", group_views.All_Groups_View.as_view(), name="index"),
     # Groups
-    path(
-        "group_details/<int:pk>/",
-        group_views.Group_Detail_View.as_view(),
-        name="group_detail",
-    ),
+    path("", group_views.All_Groups_View.as_view(), name="index"),
     path("all_groups/", group_views.All_Groups_View.as_view(), name="all_groups"),
     path("", group_views.All_Groups_View.as_view(), name="all_groups"),
-    # A site qwith the group creation action
-    path("group_create/", group_views.Group_Create_View.as_view(), name="group_create"),
-    # Group creation post action
-    path("create_group/", group_views.create_group, name="create_group"),
-    path("edit_group/<int:pk>/", group_views.edit_group, name="edit_group"),
-    path("delete_group/<int:pk>/", group_views.delete_group, name="delete_group"),
+    # Transactions
+    path(
+        "all_transactions/",
+        budget_txn_views.AllTransactionsView.as_view(),
+        name="all_transactions",
+    ),
+    path(
+        "all_transactions/<str:date_from>/<str:date_to>/",
+        budget_txn_views.AllTransactionsView.as_view(),
+        name="all_transactions",
+    ),
     # Categories
     path(
         "category_details/<int:pk>/",
@@ -44,15 +44,5 @@ urlpatterns = [
         "delete_category/<int:pk>/",
         category_views.delete_category,
         name="delete_category",
-    ),
-    path(
-        "all_transactions/",
-        budget_txn_views.AllTransactionsView.as_view(),
-        name="all_transactions",
-    ),
-    path(
-        "all_transactions/<str:date_from>/<str:date_to>/",
-        budget_txn_views.AllTransactionsView.as_view(),
-        name="all_transactions",
     ),
 ]
