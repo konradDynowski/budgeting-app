@@ -1,13 +1,81 @@
 {% extends "budgeting_app/base/base.html" %}
 
-{% block title %}All transactions{% endblock %}
+{% block title %}Transakcje{% endblock %}
 
 {% block content %}
 <h1>All Transactions</h1>
-<table name="all_txns">
+<h2>Add Transactions</h2>
+<form method="POST">
+    {% csrf_token %}
+    <table id="transactionTable">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{ formset.management_form }}
+            {% for form in formset %}
+            <tr class="transaction-form">
+                <td>{{ form.category_id }}</td>
+                <td>{{ form.transaction_date }}</td>
+                <td>{{ form.transaction_amount }}</td>
+                <td>{{ form.transaction_description }}</td>
+                <td>
+                    <button class="remove-row" id="meaninglessid" name="meaninglessname">removeme</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" id="add-row">Add Transaction</button>
+    <button type="submit">Submit</button>
+</form>
+<script>
+    let formIdx = {{ formset.total_form_count }};
+
+    $("#add-row").click(function () {
+        let newForm = $("#transactionTable tbody tr:first").clone(true);
+        formIdx++;
+        newForm.find(":input").each(function () {
+            let newName = $(this).attr("name").replace(/-\d+-/, `-${formIdx}-`);
+            let newId = $(this).attr("id").replace(/-\d+-/, `-${formIdx}-`);
+            $(this).attr("id", newId);
+            $(this).attr("name", newName);
+            $("#id_form-TOTAL_FORMS").val(formIdx + 1);
+        });
+        $("#transactionTable tbody").append(newForm);
+    });
+
+    $("#transactionTable").on("click", ".remove-row", function () {
+        $(this).closest("tr").remove();
+    });
+
+</script>
+<h2>Filter Txns</h2>
+<h5>Domyślnie transakcje z tego miesiąca - wyszukaj po dacie żeby zmienić</h5>
+<form method="get" action="{% url 'budgeting_app:all_transactions' %}">
+    {{ form.as_p }}
+    <button type="submit">Filtruj</button>
+</form>
+<h2>Txns</h2>
+<table class="transaction_table" name="all_txns">
+    <tr name="header">
+        <th>Id</th>
+        <th>Kategoria</th>
+        <th>Data</th>
+        <th>Kwota</th>
+        <th>Opis</th>
+    </tr>
     {% for txn in all_txns %}
     <tr name="txn_{{ txn.id }}">
-        <td>{{ txn.category }}</td>
+        <td>{{ txn.id }}</td>
+        <td>{{ txn.category_id }}</td>
         <td>{{ txn.transaction_date }}</td>
         <td>{{ txn.transaction_amount }}</td>
         <td>{{ txn.transaction_description }}</td>

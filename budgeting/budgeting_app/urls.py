@@ -45,9 +45,14 @@ urlpatterns = [
         category_views.delete_category,
         name="delete_category",
     ),
-    # Transactions
     path(
-        "add-transactions/", budget_txn_views.add_transactions, name="add_transactions"
+        "all_transactions/",
+        budget_txn_views.AllTransactionsView.as_view(),
+        name="all_transactions",
     ),
-    path("all_transactions/", budget_txn_views.AllTransactionsView.as_view(), name="all_transactions")
+    path(
+        "all_transactions/<str:date_from>/<str:date_to>/",
+        budget_txn_views.AllTransactionsView.as_view(),
+        name="all_transactions",
+    ),
 ]

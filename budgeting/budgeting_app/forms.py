@@ -14,3 +14,7 @@ class BudgetTransactionForm(forms.ModelForm):
         widgets = {
             'transaction_date': forms.DateInput(attrs={'type': 'date'}),  # HTML5 date input
         }
+
+class FilterAllTransactions(forms.Form):
+    date_from = forms.DateField(required=True, label="Od", widget=forms.DateInput(attrs={"type":"date"}))
+    date_to = forms.DateField(required=True, label="Do", widget=forms.DateInput(attrs={"type":"date"}))
