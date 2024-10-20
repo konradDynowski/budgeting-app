@@ -1,24 +1,87 @@
 <!-- home.html -->
 {% extends "budgeting_app/base/base.html" %}
 
-{% block title %}All categories{% endblock %}
+{% block title %}Kategorie{% endblock %}
 
 {% block content %}
-{% if all_categories %}
-<div name="ALL_CATEGORIES">
-    {% for category in all_categories %}
-    <div name="category{{ category.id }}">
-        <h5>Category id {{ category.id }} </h5>
-        <p>Category {{category.category_code}} -- Category name: {{category.category_name}} -- Group:
-            {{category.group_id}}</p>
-        <a href="{% url 'budgeting_app:category_detail' category.id %}">View Category details</a>
-    </div>
-    {% endfor %}
-</div>
-{% else %}
-<div>
-    <p>No categories yet, please add some</p>
-    <a href="{%url 'budgeting_app:category_create' %}">Create category</a>
-</div>
-{% endif %}
-{% endblock %}
+
+<h1>Wszystkie kategorie</h1>
+<h2>Kategorie</h2>
+<table class="categories-table" name="all_categories">
+    <thead>
+        <tr>
+            <th>ID kategorii</th>
+            <th>Grupa</th>
+            <th>Kod kategorii</th>
+            <th>Nazwa kategorii</th>
+            <th>Opis kategorii</th>
+            <th>Aktywna?</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr name="category_{{category.id}}">
+            <td>{{category.id}}</td>
+            <td>{{category.group_id}}</td>
+            <td>{{category.category_code}}</td>
+            <td>{{category.category_name}}</td>
+            <td>{{category.category_description}}</td>
+            <td>{{category.active_flag}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h2>Dodaj nowe kategorie</h2>
+<!-- startdone -->
+<form method="POST">
+    {% csrf_token %}
+    <table id="categories-table">
+        <thead>
+            <tr>
+                <th>Grupa</th>
+                <th>Kod kategorii</th>
+                <th>Nazwa kategorii</th>
+                <th>Opis kategorii</th>
+                <th>Aktywna?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ formset.management_form }}
+            {% for form in formset %}
+            <tr class="categories-form">
+                <td>{{form.group_id}}</td>
+                <td>{{form.category_code}}</td>
+                <td>{{form.category_name}}</td>
+                <td>{{form.category_description}}</td>
+                <td>{{form.active_flag}}</td>
+                <td><button type="button" class="remove-row">Usuń wiersz</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" id="add-row">Dodaj kategorię</button>
+    <button type="submit">Zapisz</button>
+</form>
+<!-- enddone -->
+<script>
+    let formIdx = {{ formset.total_form_count }};
+
+    $("#add-row").click(function () {
+        let newForm = $("#transactionTable tbody tr:first").clone(true);
+        formIdx++;
+        newForm.find(":input").each(function () {
+            let newName = $(this).attr("name").replace(/-\d+-/, `-${formIdx}-`);
+            let newId = $(this).attr("id").replace(/-\d+-/, `-${formIdx}-`);
+            $(this).attr("id", newId);
+            $(this).attr("name", newName);
+            $("#id_form-TOTAL_FORMS").val(formIdx + 1);
+        });
+        $("#transactionTable tbody").append(newForm);
+    });
+
+    $("#transactionTable").on("click", ".remove-row", function () {
+        $(this).closest("tr").remove();
+    });
+</script>
+
+{%endblock%}

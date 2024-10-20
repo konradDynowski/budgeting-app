@@ -1,5 +1,5 @@
 from django import forms
-from .models import Budget_Group, Budget_Transaction
+from .models import Budget_Category, Budget_Group, Budget_Transaction
 
 
 class BudgetTransactionForm(forms.ModelForm):
@@ -35,4 +35,16 @@ class BudgetGroupForm(forms.ModelForm):
             "group_code",
             "group_name",
             "group_description",
+        ]
+
+
+class BudgetCategoryForm(forms.ModelForm):
+    class Meta:
+        model = Budget_Category
+        fields = [
+            "group_id",
+            "category_code",
+            "category_name",
+            "category_description",
+            "active_flag",
         ]

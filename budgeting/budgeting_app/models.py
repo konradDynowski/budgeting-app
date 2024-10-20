@@ -6,6 +6,10 @@ class Budget_Group(models.Model):
     group_code = models.CharField(max_length=10)
     group_name = models.CharField(max_length=32)
     group_description = models.CharField(max_length=100)
+    active_flag = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.group_code + "." + self.group_name
 
 
 class Budget_Category(models.Model):
@@ -24,6 +28,7 @@ class Budget_Transaction(models.Model):
     transaction_date = models.DateField()
     transaction_amount = models.DecimalField(decimal_places=2, max_digits=12)
     transaction_description = models.CharField(max_length=100)
+    active_flag = models.BooleanField(default=True)
 
 
 # Base models for cashflow planning

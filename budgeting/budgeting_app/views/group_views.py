@@ -25,7 +25,7 @@ class All_Groups_View(generic.ListView):
             Budget_Group, form=BudgetGroupForm, extra=1
         )
         if self.request.method == "POST":
-            formset = BudgetGroupFormSet(request.POST)
+            formset = BudgetGroupFormSet(self.request.POST)
             print(formset.errors)
             if formset.is_valid():
                 print("Formset valid")
