@@ -16,22 +16,20 @@ _basic models implemented_
 
 ### Main - top priority
 
-#### App opening and navigation
-_all groups and create group added_
-As a user I want to be able to open main page and navigate to relevant pages using visible links.
+#### :white_check_mark: App opening and navigation
+As a user I want to be able to open main page and navigate to relevant pages using visible links. 
 
-#### Groups management
-_implemented_
+#### :wrench: Groups management
 As a user I want to be able to 
-* view existing groups
-* add new groups
-* modify existing groups
+* :white_check_mark: view existing groups
+* :white_check_mark: add new groups
+* :wrench: modify existing groups
 
-#### Categories management
+#### :wrench: Categories management
 As a user I want to be able to 
-* view existing categories
-* add new categories
-* modify existing categories
+* :white_check_mark: view existing categories
+* :white_check_mark: add new categories
+* :wrench: modify existing categories
 
 #### Budgeting - planning a month
 As a user I want to be able create and edit a budget for a month using a simple form, which will allow me to update all of the categories for a given time period at once. 
@@ -39,7 +37,7 @@ As a user I want to be able create and edit a budget for a month using a simple 
 _This should be integrated within the viewing page - on clicking an edit button, the editable fields with new amounts (quotas) shoud be visible next to aggregated spending and current plan, as well as with the comment fields next to them_
 
 #### Budgeting - viewing a month
-As a user I want to be able to view a budget for a month using a view, which will also provide me a summed up spending for each categories and groups.
+As a user I want to be able to view a budget for a month using a view, which will also provide me a summed up spending for each categories and groups.v
 
 #### Transaction recording
 As a user I want to be able to enter multiple transactions at once using a readable form.
@@ -53,3 +51,5 @@ As a user I want to export the data for a given month in an excel format - one s
 
 #### View an extended period of months
 As a user I want to have a dashboard on which I would be able to create cumulated and detailed reports for multiple months, to either see how the trends look like through time
+
+#### https://stackoverflow.com/questions/35796195/how-to-redirect-to-previous-page-in-django-after-post-request

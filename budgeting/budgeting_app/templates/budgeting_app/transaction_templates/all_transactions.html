@@ -65,21 +65,27 @@
 </form>
 <h2>Txns</h2>
 <table class="transaction_table" name="all_txns">
-    <tr name="header">
-        <th>Id</th>
-        <th>Kategoria</th>
-        <th>Data</th>
-        <th>Kwota</th>
-        <th>Opis</th>
-    </tr>
-    {% for txn in all_txns %}
-    <tr name="txn_{{ txn.id }}">
-        <td>{{ txn.id }}</td>
-        <td>{{ txn.category_id }}</td>
-        <td>{{ txn.transaction_date }}</td>
-        <td>{{ txn.transaction_amount }}</td>
-        <td>{{ txn.transaction_description }}</td>
-    </tr>
-    {% endfor %}
+    <thead>
+
+        <tr name="header">
+            <th>Id</th>
+            <th>Kategoria</th>
+            <th>Data</th>
+            <th>Kwota</th>
+            <th>Opis</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for txn in all_txns %}
+
+        <tr name="txn_{{ txn.id }}">
+            <td>{{ txn.id }}</td>
+            <td>{{ txn.category_id }}</td>
+            <td>{{ txn.transaction_date }}</td>
+            <td>{{ txn.transaction_amount }}</td>
+            <td>{{ txn.transaction_description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

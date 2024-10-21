@@ -7,20 +7,25 @@
 <h1>Wszystkie grupy</h1>
 <h2>Grupy</h2>
 <table class="groups-table" name="all-groups">
-    <tr name="header">
-        <th>ID grupy</th>
-        <th>Kod grupy</th>
-        <th>Nazwa grupy</th>
-        <th>Opis grupy</th>
-    </tr>
-    {% for group in all_groups %}
-    <tr name="group_{{ group.id }}">
-        <td>{{ group.id }}</td>
-        <td>{{ group.group_code }}</td>
-        <td>{{ group.group_name }}</td>
-        <td>{{ group.group_description }}</td>
-    </tr>
-    {% endfor %}
+    <thead>
+        <tr name="header">
+            <th>ID grupy</th>
+            <th>Kod grupy</th>
+            <th>Nazwa grupy</th>
+            <th>Opis grupy</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for group in all_groups %}
+
+        <tr name="group_{{ group.id }}">
+            <td>{{ group.id }}</td>
+            <td>{{ group.group_code }}</td>
+            <td>{{ group.group_name }}</td>
+            <td>{{ group.group_description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
 <h2>Dodaj nowe grupy</h2>
