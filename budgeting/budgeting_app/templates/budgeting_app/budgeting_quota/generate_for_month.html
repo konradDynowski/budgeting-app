@@ -1,0 +1,15 @@
+<!-- home.html -->
+{% extends "budgeting_app/base/base.html" %}
+
+{% block title %}Wybór miesiąca{% endblock %}
+
+{% block content %}
+
+<h1>Planowanie miesiąca</h1>
+<h2>Wybierz miesiąc i rok</h2>
+<form method="POST" id="get-quotas">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Rozpocznij planowanie!</button>
+</form>
+{%endblock%}

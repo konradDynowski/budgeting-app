@@ -2,6 +2,7 @@ from django.urls import path
 from .views import group_views
 from .views import category_views
 from .views import budget_txn_views
+from .views import budget_quota_views
 
 app_name = "budgeting_app"
 urlpatterns = [
@@ -25,5 +26,16 @@ urlpatterns = [
         "all_categories/",
         category_views.All_Categories_View.as_view(),
         name="all_categories",
+    ),
+    path(
+        "plan_month/",
+        budget_quota_views.GenerateBudgetView.as_view(),
+        name="generate_budget",
+    ),
+    # should be like: 12-2024
+    path(
+        "month_planner/<str:date_month>/",
+        budget_quota_views.PlanMonthView.as_view(),
+        name="month_planning",
     ),
 ]

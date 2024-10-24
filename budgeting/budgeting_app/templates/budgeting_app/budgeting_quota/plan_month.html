@@ -1,0 +1,47 @@
+<!-- home.html -->
+{% extends "budgeting_app/base/base.html" %}
+
+{% block title %}Wybór miesiąca{% endblock %}
+
+{% block content %}
+<h1>Plan miesiąca</h1>
+<!-- <h2>Wybierz miesiąc i rok</h2> -->
+<form method="POST">
+    {%csrf_token%}
+    <table>
+        <thead>
+            <tr>
+                <td>Kod</td>
+                <td>Kategoria</td>
+                <td>Kwota</td>
+                <td>PLAN</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group, group_level_dict in txn_cat_grp_dict.items %}
+            <tr class="group">
+                <td>{{group.group_code}}</td>
+                <td>{{group.group_name}}</td>
+                <td>{{group_level_dict.group_sum}}</td>
+                <td>{{group_level_dict.group_quota}}</td>
+            </tr>
+            {%if group_level_dict.categories%}
+            {%for category, category_level_dict in group_level_dict.categories.items%}
+            <tr class="category">
+                <td>{{category.category_code}}</td>
+                <td>{{category.category_name}}</td>
+                <td>{{category_level_dict.category_sum}}</td>
+                <td>
+                    <input type="number" name="category_quota_{{category_level_dict.quota.id}}"
+                        id="category_quota_{{category_level_dict.quota.id}}"
+                        value="{{category_level_dict.quota.planned_amount}}" min="0">
+                </td>
+            </tr>
+            {%endfor%}
+            {%endif%}
+            {% endfor %}
+        </tbody>
+    </table>
+    <input type="submit" value="submit">
+</form>
+{%endblock%}
