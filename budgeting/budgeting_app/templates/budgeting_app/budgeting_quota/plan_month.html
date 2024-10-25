@@ -25,8 +25,7 @@
                 <td>{{group_level_dict.group_sum}}</td>
                 <td>{{group_level_dict.group_quota}}</td>
             </tr>
-            {%if group_level_dict.categories%}
-            {%for category, category_level_dict in group_level_dict.categories.items%}
+            {% for category, category_level_dict in group_level_dict.categories.items%}
             <tr class="category">
                 <td>{{category.category_code}}</td>
                 <td>{{category.category_name}}</td>
@@ -37,8 +36,7 @@
                         value="{{category_level_dict.quota.planned_amount}}" min="0">
                 </td>
             </tr>
-            {%endfor%}
-            {%endif%}
+            {% endfor %}
             {% endfor %}
         </tbody>
     </table>

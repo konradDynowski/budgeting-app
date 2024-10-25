@@ -46,8 +46,8 @@ class Category_Quota(models.Model):
         Budget_Category, null=True, on_delete=models.SET_NULL
     )
     quota_date = models.DateField()
-    planned_amount = models.DecimalField(decimal_places=2, max_digits=12)
-    quota_comment = models.CharField(max_length=100)
+    planned_amount = models.DecimalField(default=100, decimal_places=2, max_digits=12)
+    quota_comment = models.CharField(max_length=100, default="comment")
 
     def __str__(self) -> str:
         return (

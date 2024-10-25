@@ -15,7 +15,7 @@ class All_Categories_View(generic.ListView):
     context_object_name = "all_categories"
 
     def get_queryset(self):
-        return Budget_Category.objects.all().order_by("group_id", "category_code")
+        return Budget_Category.objects.all().order_by("group_id", "id")
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

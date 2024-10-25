@@ -57,22 +57,33 @@
     <button type="submit">Zapisz</button>
 </form>
 <script>
-    let formIdx = {{ formset.total_form_count }};
+    let formIdx = {{ formset.total_form_count }} - 0;
 
     $("#add-row").click(function () {
-        let newForm = $("#transactionTable tbody tr:first").clone(true);
+        let newForm = $("#groups-table tbody tr:first").clone(true);
         formIdx++;
         newForm.find(":input").each(function () {
-            let newName = $(this).attr("name").replace(/-\d+-/, `-${formIdx}-`);
-            let newId = $(this).attr("id").replace(/-\d+-/, `-${formIdx}-`);
+            console.log($(this));
+            let name = $(this).attr("name");
+            let newName = "";
+            let newId = "";
+            if (name) {
+                newName = name.replace(/-\d+-/, `-${formIdx}-`);
+                console.log(newName);
+            }
+            let id = $(this).attr("id");
+            if (id) {
+                newId = id.replace(/-\d+-/, `-${formIdx}-`);
+                console.log(newId);
+            }
             $(this).attr("id", newId);
             $(this).attr("name", newName);
             $("#id_form-TOTAL_FORMS").val(formIdx + 1);
         });
-        $("#transactionTable tbody").append(newForm);
+        $("#groups-table tbody").append(newForm);
     });
 
-    $("#transactionTable").on("click", ".remove-row", function () {
+    $("#groups-table").on("click", ".remove-row", function () {
         $(this).closest("tr").remove();
     });
 </script>

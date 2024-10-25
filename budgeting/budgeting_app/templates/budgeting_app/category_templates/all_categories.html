@@ -64,22 +64,30 @@
 </form>
 <!-- enddone -->
 <script>
-    let formIdx = {{ formset.total_form_count }};
+    let formIdx = {{ formset.total_form_count }} - 1;
 
     $("#add-row").click(function () {
-        let newForm = $("#transactionTable tbody tr:first").clone(true);
+        let newForm = $("#categories-table tbody tr:first").clone(true);
         formIdx++;
         newForm.find(":input").each(function () {
-            let newName = $(this).attr("name").replace(/-\d+-/, `-${formIdx}-`);
-            let newId = $(this).attr("id").replace(/-\d+-/, `-${formIdx}-`);
+            let name = $(this).attr("name");
+            let id = $(this).attr("id");
+            let newId = "";
+            let newName = "";
+            if (name) {
+                newName = name.replace(/-\d+-/, `-${formIdx}-`);
+            }
+            if (id) {
+                newId = id.replace(/-\d+-/, `-${formIdx}-`);
+            }
             $(this).attr("id", newId);
             $(this).attr("name", newName);
             $("#id_form-TOTAL_FORMS").val(formIdx + 1);
         });
-        $("#transactionTable tbody").append(newForm);
+        $("#categories-table tbody").append(newForm);
     });
 
-    $("#transactionTable").on("click", ".remove-row", function () {
+    $("#categories-table").on("click", ".remove-row", function () {
         $(this).closest("tr").remove();
     });
 </script>
