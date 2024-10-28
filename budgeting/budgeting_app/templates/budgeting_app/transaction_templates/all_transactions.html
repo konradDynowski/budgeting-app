@@ -80,7 +80,7 @@
         {% for txn in all_txns %}
 
         <tr name="txn_{{ txn.id }}">
-            <td>{{ txn.id }}</td>
+            <td><a href="{% url 'budgeting_app:txn_details' pk=txn.id %}">{{ txn.id }}</a></td>
             <td>{{ txn.category_id }}</td>
             <td>{{ txn.transaction_date }}</td>
             <td>{{ txn.transaction_amount }}</td>

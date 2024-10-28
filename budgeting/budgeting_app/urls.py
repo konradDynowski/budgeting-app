@@ -38,4 +38,6 @@ urlpatterns = [
         budget_quota_views.PlanMonthView.as_view(),
         name="month_planning",
     ),
+    path("transaction_details/<int:pk>/", budget_txn_views.TransactionDetails.as_view(), name="txn_details"),
+    path("delete_transaction/<int:pk>", budget_txn_views.delete_transaction, name="delete_transaction")
 ]

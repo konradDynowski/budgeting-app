@@ -16,7 +16,7 @@ class AllTransactionsView(generic.ListView):
     context_object_name = "all_txns"
 
     def get_queryset(self):
-        queryset = Budget_Transaction.objects.all()
+        queryset = Budget_Transaction.objects.filter(active_flag__exact=True)
         date_from = self.request.GET.get("date_from")
         date_to = self.request.GET.get("date_to")
 
@@ -62,3 +62,24 @@ class AllTransactionsView(generic.ListView):
             if formset.is_valid():
                 formset.save()
                 return HttpResponseRedirect(reverse("budgeting_app:all_transactions"))
+
+class TransactionDetails(generic.DetailView):
+    model = Budget_Transaction
+    template_name = "budgeting_app/transaction_templates/txn_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["transaction"] = context["object"]
+        return context
+
+def delete_transaction(request, **kwargs):
+    if request.method == "POST":
+        transaction = Budget_Transaction.objects.get(pk=kwargs["pk"])
+        transaction.active_flag = False
+        transaction.save()
+        year = transaction.transaction_date.year
+        month = transaction.transaction_date.month
+        date_to = date(year, month, 1)
+        date_from = date(year, month, calendar.monthrange(year, month)[1])
+        return HttpResponseRedirect(reverse("budgeting_app:all_transactions"))
+        

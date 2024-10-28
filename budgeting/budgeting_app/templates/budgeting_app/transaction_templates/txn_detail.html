@@ -1,0 +1,27 @@
+{% extends "budgeting_app/base/base.html" %}
+
+{% block title %}Transakcja{% endblock %}
+
+{% block content %}
+<h1>Szczegóły transakcji</h1>
+<table>
+    <tr>
+        <td>Kategoria</td>
+        <td>Kwota</td>
+        <td>Opis</td>
+    </tr>
+    <tr>
+        <td>
+            {{transaction.category_id}}
+        </td>
+        <td>{{transaction.transaction_amount}}</td>
+        <td>{{transaction.transaction_description}}</td>
+    </tr>
+</table>
+<form action="{% url 'budgeting_app:delete_transaction' pk=transaction.id %}" method="post" id="delete_transaction"> 
+    {%csrf_token%}
+<input type="submit" value="delete_transaction"></input>
+</form>
+</div>
+
+{% endblock %}
