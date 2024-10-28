@@ -67,7 +67,7 @@
     let formIdx = {{ formset.total_form_count }} - 1;
 
     $("#add-row").click(function () {
-        let newForm = $("#categories-table tbody tr:first").clone(true);
+        let newForm = $("#categories-table tbody tr:last").clone(true);
         formIdx++;
         newForm.find(":input").each(function () {
             let name = $(this).attr("name");
@@ -85,6 +85,7 @@
             $("#id_form-TOTAL_FORMS").val(formIdx + 1);
         });
         $("#categories-table tbody").append(newForm);
+        $("#categories-table tbody tr:last td:first input").focus();
     });
 
     $("#categories-table").on("click", ".remove-row", function () {

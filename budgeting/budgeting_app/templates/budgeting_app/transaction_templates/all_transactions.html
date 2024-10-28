@@ -40,7 +40,7 @@
     let formIdx = {{ formset.total_form_count }};
 
     $("#add-row").click(function () {
-        let newForm = $("#transactionTable tbody tr:first").clone(true);
+        let newForm = $("#transactionTable tbody tr:last").clone(true);
         formIdx++;
         newForm.find(":input").each(function () {
             let newName = $(this).attr("name").replace(/-\d+-/, `-${formIdx}-`);
@@ -50,6 +50,7 @@
             $("#id_form-TOTAL_FORMS").val(formIdx + 1);
         });
         $("#transactionTable tbody").append(newForm);
+        $("#transactionTable tbody tr:last td input").focus();
     });
 
     $("#transactionTable").on("click", ".remove-row", function () {

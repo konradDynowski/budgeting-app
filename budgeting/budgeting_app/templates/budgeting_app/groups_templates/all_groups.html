@@ -60,27 +60,25 @@
     let formIdx = {{ formset.total_form_count }} - 0;
 
     $("#add-row").click(function () {
-        let newForm = $("#groups-table tbody tr:first").clone(true);
+        let newForm = $("#groups-table tbody tr:last").clone(true);
         formIdx++;
         newForm.find(":input").each(function () {
-            console.log($(this));
             let name = $(this).attr("name");
             let newName = "";
             let newId = "";
             if (name) {
                 newName = name.replace(/-\d+-/, `-${formIdx}-`);
-                console.log(newName);
             }
             let id = $(this).attr("id");
             if (id) {
                 newId = id.replace(/-\d+-/, `-${formIdx}-`);
-                console.log(newId);
             }
             $(this).attr("id", newId);
             $(this).attr("name", newName);
             $("#id_form-TOTAL_FORMS").val(formIdx + 1);
         });
         $("#groups-table tbody").append(newForm);
+        $("#groups-table tbody tr:last td:first input").focus();
     });
 
     $("#groups-table").on("click", ".remove-row", function () {
