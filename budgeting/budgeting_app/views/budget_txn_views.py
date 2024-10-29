@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from datetime import date
-
+from django.urls import resolve
 from ..forms import BudgetTransactionForm, FilterAllTransactions
 from django.forms import modelformset_factory
 from ..models import Budget_Transaction
@@ -63,9 +63,14 @@ class AllTransactionsView(generic.ListView):
                 formset.save()
                 return HttpResponseRedirect(reverse("budgeting_app:all_transactions"))
 
-class TransactionDetails(generic.DetailView):
+class TransactionDetails(generic.UpdateView, generic.DetailView):
     model = Budget_Transaction
-    template_name = "budgeting_app/transaction_templates/txn_detail.html"
+    template_name = "budgeting_app/transaction_templates/update_transaction.html"
+    fields = ["transaction_date", "transaction_amount", "transaction_description"]
+    
+    def form_valid(self, form):
+        current_url = self.request.path
+        return HttpResponseRedirect(current_url)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -82,4 +87,4 @@ def delete_transaction(request, **kwargs):
         date_to = date(year, month, 1)
         date_from = date(year, month, calendar.monthrange(year, month)[1])
         return HttpResponseRedirect(reverse("budgeting_app:all_transactions"))
-        
+    

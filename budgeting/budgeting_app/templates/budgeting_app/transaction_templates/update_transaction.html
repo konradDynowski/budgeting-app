@@ -1,0 +1,28 @@
+{% extends "budgeting_app/base/base.html" %}
+
+{% block title %}Transakcja{% endblock %}
+
+{% block content %}
+<h1>Szczegóły transakcji - update</h1>
+<table>
+    <tr>
+        <td>Kategoria</td>
+        <td>Kwota</td>
+        <td>Opis</td>
+    </tr>
+    <tr>
+        <td>
+            {{transaction.category_id}}
+        </td>
+        <td>{{transaction.transaction_amount}}</td>
+        <td>{{transaction.transaction_description}}</td>
+    </tr>
+</table>
+<form method="post"> 
+    {%csrf_token%}
+    {{ form.as_p }}
+<input type="submit" value="update"></input>
+</form>
+</div>
+
+{% endblock %}
