@@ -18,11 +18,38 @@
         <td>{{transaction.transaction_description}}</td>
     </tr>
 </table>
-<form method="post"> 
+<h2>Update transaction?</h2>
+<input type="checkbox" id="hide_update_transaction_form">
+<form method="post" id="hideable_form" class="hidden"> 
     {%csrf_token%}
     {{ form.as_p }}
 <input type="submit" value="update"></input>
 </form>
 </div>
+<script>
+    let hiding_checkbox = document.getElementById("hide_update_transaction_form");
+    let hideable_form = document.getElementById("hideable_form");
+
+    hiding_checkbox.addEventListener('change',()=>{
+        let f_class = hideable_form.getAttribute("class");
+        if (hiding_checkbox.checked) {
+            if (f_class && f_class.includes("hidden")) {
+                hideable_form.setAttribute("class", f_class.replace("hidden", "not_hid"));
+            } else if (f_class) {
+                hideable_form.setAttribute("class", f_class + " not_hid");
+            } else {
+                hideable_form.setAttribute("class", "not_hid");
+            }
+        } else {
+            if (f_class && f_class.includes("not_hid")) {
+                hideable_form.setAttribute("class", f_class.replace("not_hid", "hidden"));
+            } else if (f_class) {
+                hideable_form.setAttribute("class", f_class + " hidden");
+            } else {
+                hideable_form.setAttribute("class", "hidden"); 
+            }
+        }
+    });
+</script>
 
 {% endblock %}

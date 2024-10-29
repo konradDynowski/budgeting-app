@@ -70,6 +70,7 @@ class TransactionDetails(generic.UpdateView, generic.DetailView):
     
     def form_valid(self, form):
         current_url = self.request.path
+        form.save()
         return HttpResponseRedirect(current_url)
 
     def get_context_data(self, **kwargs):
