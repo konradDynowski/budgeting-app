@@ -1,6 +1,6 @@
 from django import forms
 from .models import Budget_Category, Budget_Group, Budget_Transaction
-
+from .helpers import form_helpers
 
 class BudgetTransactionForm(forms.ModelForm):
     class Meta:
@@ -25,6 +25,7 @@ class FilterAllTransactions(forms.Form):
     date_to = forms.DateField(
         required=True, label="Do", widget=forms.DateInput(attrs={"type": "date"})
     )
+    category = form_helpers.fetch_categories_as_choice_field()
 
 
 class GenerateQuotasForMonthForm(forms.Form):
@@ -70,5 +71,8 @@ class BudgetCategoryForm(forms.ModelForm):
             "category_code",
             "category_name",
             "category_description",
-            "active_flag",
         ]
+
+
+class Csv_Transaction_Form(forms.Form):
+    csv_file = forms.FileField()

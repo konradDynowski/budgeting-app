@@ -1,0 +1,31 @@
+{% extends "budgeting_app/base/base.html" %}
+
+{% block title %}Transakcja{% endblock %}
+
+{% block content %}
+<h1>Preview - CSV</h1>
+
+ <form method="post" action="upload_transactions">
+    {% csrf_token %}
+    {% for csv_transaction in csv_transactions %}
+        <div>Transaction {{ forloop.counter }}</div>
+        <input type="hidden" name="transactions-{{ forloop.counter }}-id" value="{{ csv_transaction.id }}"><br>
+        <label for="amount">Amount:</label><br>
+        <input type="text" name="transactions-{{ forloop.counter }}-amount" value="{{ csv_transaction.amount }}"><br>
+        <label for="description-legacy">Description legacy (from csv):</label><br>
+        <input type="text" name="transactions-{{ forloop.counter }}-description-legacy" value="{{ csv_transaction.description }}"><br>
+        <label for="date">Date:</label><br>
+        <input type="date" name="transactions-{{ forloop.counter }}-date" value="{{ csv_transaction.date }}"><br>
+            <select name="transactions-{{ forloop.counter }}-category">
+            {% for category in categories %}
+            <option value="{{ category.id }}"> {{ category }}
+                </option>
+            {% endfor %}
+        </select>
+        <label for="description">Description:</label><br>
+        <input type="text" name="transactions-{{ forloop.counter }}-description" value="opis"><br>
+    {% endfor %}
+    <button type="submit">Submit</button>
+</form>   
+
+    {% endblock %} 

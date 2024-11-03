@@ -7,8 +7,10 @@ from datetime import date
 from django.urls import resolve
 from ..forms import BudgetTransactionForm, FilterAllTransactions
 from django.forms import modelformset_factory
-from ..models import Budget_Transaction
-
+from ..models import Budget_Transaction, Budget_Category
+from budgeting_app.helpers import csv_to_transaction_helpers
+from django.shortcuts import render
+from ..forms import Csv_Transaction_Form
 
 class AllTransactionsView(generic.ListView):
     template_name = "budgeting_app/transaction_templates/all_transactions.html"
@@ -88,4 +90,26 @@ def delete_transaction(request, **kwargs):
         date_to = date(year, month, 1)
         date_from = date(year, month, calendar.monthrange(year, month)[1])
         return HttpResponseRedirect(reverse("budgeting_app:all_transactions"))
-    
+
+def upload_csv(request, **kwargs):
+    template_name = "budgeting_app/transaction_templates/update_csv_transactions.html"
+    csv_data = []
+    if request.method == "POST":
+        form = Csv_Transaction_Form(request.POST, request.FILES)
+
+        if form.is_valid():
+            csv_file = request.FILES["csv_file"].read().decode("utf-8")
+            helper = csv_to_transaction_helpers.Csv_To_Transaction_Helper()
+            csv_transactions = helper.proces_mbank_payload(csv_file)
+            for txn in csv_transactions:
+                print(str(txn))
+            return render(request, "budgeting_app/transaction_templates/csv_transactions_preview.html",
+                          {
+                              "csv_transactions": csv_transactions,
+                              "categories": Budget_Category.objects.all(),
+                              } 
+                          )
+
+    else:
+        form = Csv_Transaction_Form()
+        return render(request, template_name, {"form": form})

@@ -1,0 +1,11 @@
+{% extends "budgeting_app/base/base.html" %}
+
+{% block title %}Transakcje{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Wrzuć swój csv z mBanku</button>
+</form>
+{% endblock %}

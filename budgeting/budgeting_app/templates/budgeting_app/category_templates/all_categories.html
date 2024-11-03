@@ -10,23 +10,19 @@
 <table class="categories-table" name="all_categories">
     <thead>
         <tr>
-            <th>ID kategorii</th>
             <th>Grupa</th>
             <th>Kod kategorii</th>
             <th>Nazwa kategorii</th>
             <th>Opis kategorii</th>
-            <th>Aktywna?</th>
         </tr>
     </thead>
     <tbody>
         {% for category in all_categories %}
         <tr name="category_{{category.id}}">
-            <td>{{category.id}}</td>
             <td>{{category.group_id}}</td>
             <td>{{category.category_code}}</td>
             <td>{{category.category_name}}</td>
             <td>{{category.category_description}}</td>
-            <td>{{category.active_flag}}</td>
         </tr>
         {% endfor %}
     </tbody>
@@ -42,7 +38,6 @@
                 <th>Kod kategorii</th>
                 <th>Nazwa kategorii</th>
                 <th>Opis kategorii</th>
-                <th>Aktywna?</th>
             </tr>
         </thead>
         <tbody>
@@ -53,7 +48,6 @@
                 <td>{{form.category_code}}</td>
                 <td>{{form.category_name}}</td>
                 <td>{{form.category_description}}</td>
-                <td>{{form.active_flag}}</td>
                 <td><button type="button" class="remove-row">Usuń wiersz</button></td>
             </tr>
             {% endfor %}
@@ -85,7 +79,7 @@
             $("#id_form-TOTAL_FORMS").val(formIdx + 1);
         });
         $("#categories-table tbody").append(newForm);
-        $("#categories-table tbody tr:last td:first input").focus();
+        $("#categories-table tbody tr:last td:first select").focus();
     });
 
     $("#categories-table").on("click", ".remove-row", function () {
