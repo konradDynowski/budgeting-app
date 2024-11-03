@@ -13,3 +13,5 @@ As a user I want to export the data for a given month in an excel format - one s
 As a user I want to have a dashboard on which I would be able to create cumulated and detailed reports for multiple months, to either see how the trends look like through time
 
 #### Filter transaction seemlesly on one screen without reloading the whole page
+
+After entering the application to see a dashboard with planned amounts for a current month, and the transaction list for this month below.

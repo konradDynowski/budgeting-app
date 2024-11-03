@@ -41,4 +41,5 @@ urlpatterns = [
         path("transaction_details/<int:pk>/", budget_txn_views.TransactionDetails.as_view(), name="txn_details"),
         path("delete_transaction/<int:pk>", budget_txn_views.delete_transaction, name="delete_transaction"),
         path("upload_csv/", budget_txn_views.upload_csv, name="upload_csv"),
-]
+        path("upload_transactions_from_csv/", budget_txn_views.insert_transactions_from_csv_preview, name="upload_transactions_from_csv")
+        ]

@@ -101,8 +101,6 @@ def upload_csv(request, **kwargs):
             csv_file = request.FILES["csv_file"].read().decode("utf-8")
             helper = csv_to_transaction_helpers.Csv_To_Transaction_Helper()
             csv_transactions = helper.proces_mbank_payload(csv_file)
-            for txn in csv_transactions:
-                print(str(txn))
             return render(request, "budgeting_app/transaction_templates/csv_transactions_preview.html",
                           {
                               "csv_transactions": csv_transactions,
@@ -113,3 +111,40 @@ def upload_csv(request, **kwargs):
     else:
         form = Csv_Transaction_Form()
         return render(request, template_name, {"form": form})
+
+def insert_transactions_from_csv_preview(request, **kwargs):
+    if request.method == "POST":
+        # POST has a dict with values, reflecting actual HTTP request
+        
+        transaction_information = {}
+        for key, value in request.POST.items():
+            # ignore csrf, not needed to initialize transaction
+            if key == "csrfmiddlewaretoken":
+                continue
+
+            attribute_type = "".join([character for character in key if character.isalpha()])
+            transaction_form_number = "".join([digit for digit in key if digit.isdigit()])
+
+            # now insert/update transaction information
+            if transaction_form_number in transaction_information.keys():
+                transaction_information[transaction_form_number][attribute_type] = value
+            else:
+                transaction_information[transaction_form_number] = { attribute_type: value }
+
+        # now create transactions into the database if there are any
+        print(transaction_information)
+        for key, transaction in transaction_information.items():
+            txn = Budget_Transaction(
+                    category_id=Budget_Category.objects.get(pk=transaction["transactionscategory"]),
+                    transaction_date=transaction["transactionsdate"],
+                    transaction_amount=float(transaction["transactionsamount"].replace(",", ".")),
+                    transaction_description=transaction["transactionsdescription"],
+                    transaction_external_comment=transaction["transactionsdescriptionlegacy"])
+        txn.save()
+
+
+        #transaction_definitions = request.POST["transactions"] 
+        return render(request, "budgeting_app/transaction_templates/update_csv_transactions.html", {"form": Csv_Transaction_Form()})
+
+    else:
+        return render(request, "budgeting_app/transaction_templates/update_csv_transactions.html", {"form": Csv_Transaction_Form()})
