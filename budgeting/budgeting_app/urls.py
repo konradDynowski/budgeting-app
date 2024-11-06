@@ -6,8 +6,8 @@ from .views import budget_quota_views
 
 app_name = "budgeting_app"
 urlpatterns = [
-        # Groups
-        path("", group_views.All_Groups_View.as_view(), name="index"),
+        # Group
+        path("", budget_quota_views.Home_Page_View.as_view(), name="index"),
         path("all_groups/", group_views.All_Groups_View.as_view(), name="all_groups"),
         path("", group_views.All_Groups_View.as_view(), name="all_groups"),
         # Transactions
@@ -42,4 +42,5 @@ urlpatterns = [
         path("delete_transaction/<int:pk>", budget_txn_views.delete_transaction, name="delete_transaction"),
         path("upload_csv/", budget_txn_views.upload_csv, name="upload_csv"),
         path("upload_transactions_from_csv/", budget_txn_views.insert_transactions_from_csv_preview, name="upload_transactions_from_csv")
+        
         ]

@@ -119,3 +119,8 @@ def generate_budgeting_quotas(month, year):
             category_id=category,
             quota_date=date(year, month, 1),
         )
+        
+class Home_Page_View(generic.ListView):
+    template_name = "budgeting_app/budgeting_quota/home.html"
+    def get_queryset(self):
+        return None
