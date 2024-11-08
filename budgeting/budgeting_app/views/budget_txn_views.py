@@ -26,9 +26,9 @@ class AllTransactionsView(generic.ListView):
             td = date.today()
             date_from = date(td.year, td.month, 1)
             date_to = date(td.year, td.month, calendar.monthrange(td.year, td.month)[1])
-        queryset = queryset.filter(
-            transaction_date__gte=date_from, transaction_date__lte=date_to
-        )
+            queryset = queryset.filter(
+                    transaction_date__gte=date_from, transaction_date__lte=date_to
+                    )
         queryset = queryset.order_by("transaction_date")
         return queryset
 

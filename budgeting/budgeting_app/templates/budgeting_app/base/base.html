@@ -8,10 +8,12 @@
     {% load static %} <!-- Load the static template tag library -->
     <link rel="stylesheet" href="{% static 'budgeting_app/style.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.3"></script>
 </head>
 
 <body>
     <nav class="sidenav">
+        <a href="{% url 'budgeting_app:index' %}">Home</a>
         <a href="{% url 'budgeting_app:all_groups' %}">Grupy</a>
         <a href="{% url 'budgeting_app:all_categories' %}">Kategorie</a>
         <a href="{% url 'budgeting_app:all_transactions' %}">Transakcje</a>

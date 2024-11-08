@@ -6,10 +6,10 @@ from .views import budget_quota_views
 
 app_name = "budgeting_app"
 urlpatterns = [
+        path("", budget_quota_views.Quotas_Home_Page.as_view(), name="index"),
+        path("<str:date_month>", budget_quota_views.Month_Home_Page.as_view(), name="month_index"),
         # Group
-        path("", budget_quota_views.Home_Page_View.as_view(), name="index"),
         path("all_groups/", group_views.All_Groups_View.as_view(), name="all_groups"),
-        path("", group_views.All_Groups_View.as_view(), name="all_groups"),
         # Transactions
         path(
             "all_transactions/",
@@ -41,6 +41,5 @@ urlpatterns = [
         path("transaction_details/<int:pk>/", budget_txn_views.TransactionDetails.as_view(), name="txn_details"),
         path("delete_transaction/<int:pk>", budget_txn_views.delete_transaction, name="delete_transaction"),
         path("upload_csv/", budget_txn_views.upload_csv, name="upload_csv"),
-        path("upload_transactions_from_csv/", budget_txn_views.insert_transactions_from_csv_preview, name="upload_transactions_from_csv")
-        
+        path("upload_transactions_from_csv/", budget_txn_views.insert_transactions_from_csv_preview, name="upload_transactions_from_csv"),
         ]

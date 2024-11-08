@@ -1,0 +1,80 @@
+<h2>Dodaj transakcje</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="form_type" value="upload_transactions">
+    <table id="transactionTable">
+        <thead>
+            <tr>
+                <th>Kategoria</th>
+                <th>Data</th>
+                <th>Kwota</th>
+                <th>Opis</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{ formset.management_form }}
+            {% for form in formset %}
+            <tr class="transaction-form">
+                <td>{{ form.category_id }}</td>
+                <td>{{ form.transaction_date }}</td>
+                <td>{{ form.transaction_amount }}</td>
+                <td>{{ form.transaction_description }}</td>
+                <td>
+                    <button class="remove-row" id="meaninglessid" name="meaninglessname">removeme</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" id="add-row">Dodaj więcej</button>
+    <button type="submit">Zatwierdź</button>
+</form>
+<script>
+    let formIdx = {{ formset.total_form_count }};
+
+    $("#add-row").click(function () {
+        let newForm = $("#transactionTable tbody tr:last").clone(true);
+        formIdx++;
+        newForm.find(":input").each(function () {
+            let newName = $(this).attr("name").replace(/-\d+-/, `-${formIdx}-`);
+            let newId = $(this).attr("id").replace(/-\d+-/, `-${formIdx}-`);
+            $(this).attr("id", newId);
+            $(this).attr("name", newName);
+            $("#id_form-TOTAL_FORMS").val(formIdx + 1);
+        });
+        $("#transactionTable tbody").append(newForm);
+        $("#transactionTable tbody tr:last td input").focus();
+    });
+
+    $("#transactionTable").on("click", ".remove-row", function () {
+        $(this).closest("tr").remove();
+    });
+
+</script>
+<h2>Transakcje</h2>
+<table class="transaction_table" name="all_txns">
+    <thead>
+
+        <tr name="header">
+            <th>Id</th>
+            <th>Kategoria</th>
+            <th>Data</th>
+            <th>Kwota</th>
+            <th>Opis</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for txn in transactions %}
+
+        <tr name="txn_{{ txn.id }}">
+            <td><a href="{% url 'budgeting_app:txn_details' pk=txn.id %}">{{ txn.id }}</a></td>
+            <td>{{ txn.category_id }}</td>
+            <td>{{ txn.transaction_date }}</td>
+            <td>{{ txn.transaction_amount }}</td>
+            <td>{{ txn.transaction_description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

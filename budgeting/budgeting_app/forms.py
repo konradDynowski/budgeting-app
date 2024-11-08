@@ -25,7 +25,6 @@ class FilterAllTransactions(forms.Form):
     date_to = forms.DateField(
         required=True, label="Do", widget=forms.DateInput(attrs={"type": "date"})
     )
-    category = form_helpers.fetch_categories_as_choice_field()
 
 
 class GenerateQuotasForMonthForm(forms.Form):
