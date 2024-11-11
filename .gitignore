@@ -3,3 +3,4 @@ budgeting/db.sqlite3
 credentials
 .idea
 **/settings.py
+venv

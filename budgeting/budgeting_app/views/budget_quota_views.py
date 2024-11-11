@@ -134,8 +134,8 @@ class Quotas_Home_Page(generic.ListView):
         return queryset
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-
         context = super().get_context_data(**kwargs)
+
         # get forms
         BudgetTransactionFormSet = modelformset_factory(
             Budget_Transaction, form=BudgetTransactionForm, extra=1
@@ -151,13 +151,13 @@ class Quotas_Home_Page(generic.ListView):
             formset = BudgetTransactionFormSet(
                 queryset=Budget_Transaction.objects.none()
             )
-
         context["formset"] = formset
 
         max_date = date(
             self.year, self.month, cal.monthrange(self.year, self.refdate.month)[1]
         )
 
+        # get transaction quota summary with sums of transactions over page
         txn_cat_grp_dict = {
             group: {
                 "categories": {
@@ -176,7 +176,8 @@ class Quotas_Home_Page(generic.ListView):
             }
             for group in Budget_Group.objects.filter(active_flag__exact=True)
         }
-
+        
+        # get sums do display them in the dashboard
         for group in txn_cat_grp_dict:
             groupsum = 0
             groupplansum = 0
@@ -241,8 +242,8 @@ class Month_Home_Page(Quotas_Home_Page):
     # overwriting year/month based on the passed date_month
     def get(self, *args, **kwargs):
         dm = self.kwargs.get("date_month")
-        print(dm)
-        self.year = int(dm.split("-")[1])
-        self.month = int(dm.split("-")[0])
+        if not "favicon.ico" in dm:
+            self.year = int(dm.split("-")[1])
+            self.month = int(dm.split("-")[0])
         return super().get(self, *args, **kwargs)
 
